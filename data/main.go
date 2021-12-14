@@ -68,7 +68,7 @@ func LoadFromJSON(fullpath string) {
 func ListAllJSON() ([]byte, error) {
 	json, err := json.Marshal(winners)
 	if err != nil {
-		return nil, errors.New("Error marshalling JSON")
+		return nil, errors.New("error marshalling JSON")
 	}
 	return json, nil
 }
@@ -77,7 +77,7 @@ func ListAllJSON() ([]byte, error) {
 func ListAllByYear(yearStr string) ([]byte, error) {
 	year, err := strconv.Atoi(yearStr)
 	if err != nil {
-		return nil, errors.New("Cannot convert year to int")
+		return nil, errors.New("cannot convert year to int")
 	}
 	winnersByYear := Winners{}
 	for _, winner := range winners.Winners {
@@ -88,7 +88,7 @@ func ListAllByYear(yearStr string) ([]byte, error) {
 	}
 	json, err := json.Marshal(winnersByYear)
 	if err != nil {
-		return nil, errors.New("Error marshalling JSON")
+		return nil, errors.New("error marshalling JSON")
 	}
 
 	return json, nil
@@ -104,14 +104,14 @@ func IsAccessTokenValid(token string) bool {
 // the list of winners
 func AddNewWinner(payload io.Reader) error {
 	if payload == nil {
-		return errors.New("Invalid payload")
+		return errors.New("invalid payload")
 	}
 	var newWinner Winner
 	dec := json.NewDecoder(payload)
 	err := dec.Decode(&newWinner)
 
 	if err != nil || !newWinner.isValidWinner() {
-		return errors.New("Did not add new winner")
+		return errors.New("did not add new winner")
 	}
 
 	winners.Winners = append(winners.Winners, newWinner)
